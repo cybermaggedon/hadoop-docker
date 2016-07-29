@@ -59,7 +59,7 @@ ADD ssh_config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config
 RUN chown root:root /root/.ssh/config
 
-ADD bootstrap.sh /start-hadoop
+ADD start-hadoop /start-hadoop
 RUN chown root:root /start-hadoop
 RUN chmod 700 /start-hadoop
 
