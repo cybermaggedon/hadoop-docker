@@ -53,8 +53,6 @@ ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
-RUN $HADOOP_PREFIX/bin/hdfs namenode -format
-
 ADD ssh_config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config
 RUN chown root:root /root/.ssh/config
@@ -63,9 +61,11 @@ ADD start-hadoop /start-hadoop
 RUN chown root:root /start-hadoop
 RUN chmod 700 /start-hadoop
 
-RUN /usr/sbin/sshd && . $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
+#RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 
-CMD ["/start-hadoop", "-d"]
+#RUN /usr/sbin/sshd && . $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
+
+#CMD ["/start-hadoop", "-d"]
 
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
