@@ -2,7 +2,7 @@
 #
 # docker build -t hadoop .
 
-FROM centos:7
+FROM fedora:24
 MAINTAINER alientechnology
 
 RUN yum install -y curl which tar sudo openssh-server openssh-clients rsync
