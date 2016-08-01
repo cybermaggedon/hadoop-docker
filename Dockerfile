@@ -5,8 +5,10 @@
 FROM fedora:24
 MAINTAINER alientechnology
 
-RUN yum install -y curl which tar sudo openssh-server openssh-clients rsync
-RUN yum install -y java-1.8.0-openjdk
+RUN dnf install -y curl which tar sudo openssh-server openssh-clients rsync
+RUN dnf install -y java-1.8.0-openjdk
+
+RUN dnf install -y procps-ng hostname
 
 # passwordless ssh
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
@@ -35,8 +37,7 @@ RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/jre\nexport H
 RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop/:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
 # Hadoop config
-ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
-RUN sed s/HOSTNAME/localhost/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+ADD core-site.xml $HADOOP_PREFIX/etc/hadoop/core-site.xml
 ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
 
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
@@ -49,6 +50,8 @@ RUN chown root:root /root/.ssh/config
 ADD start-hadoop /start-hadoop
 RUN chown root:root /start-hadoop
 RUN chmod 700 /start-hadoop
+
+CMD /start-hadoop; while true; do sleep 10000; done
 
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
