@@ -3,7 +3,7 @@
 # docker build -t hadoop .
 
 FROM fedora:24
-MAINTAINER alientechnology
+MAINTAINER cybermaggedon
 
 RUN dnf install -y curl which tar sudo openssh-server openssh-clients rsync
 RUN dnf install -y java-1.8.0-openjdk
@@ -64,3 +64,4 @@ EXPOSE 8030 8031 8032 8033 8040 8042 8088
 
 #Other ports
 EXPOSE 49707 2122
+
