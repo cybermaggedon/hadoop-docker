@@ -21,9 +21,9 @@ RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 ENV JAVA_HOME /usr/lib/jvm/jre
 
 # hadoop
-COPY hadoop-2.7.2.tar.gz /usr/local/hadoop.tgz
+COPY hadoop-2.7.3.tar.gz /usr/local/hadoop.tgz
 RUN cd /usr/local && tar xfz /usr/local/hadoop.tgz
-RUN cd /usr/local && ln -s hadoop-2.7.2 hadoop
+RUN mv /usr/local/hadoop-2.7.3 /usr/local/hadoop
 
 ENV HADOOP_PREFIX /usr/local/hadoop
 ENV HADOOP_COMMON_HOME /usr/local/hadoop
