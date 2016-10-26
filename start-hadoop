@@ -6,10 +6,10 @@ HADOOP_PREFIX=/usr/local/hadoop
 
 /usr/sbin/sshd
 
-if [ ! -f /.init.hadoop ]
+if [ ! -f /data/hadoop/.init ]
 then
     /usr/local/hadoop/bin/hdfs namenode -format
-    touch /.init.hadoop
+    touch /data/hadoop/.init
 fi
 
 rm -f /tmp/*.pid
