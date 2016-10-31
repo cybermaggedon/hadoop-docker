@@ -16,6 +16,7 @@ rewrite() {
 
 NAMENODE_URI=${NAMENODE_URI:-hdfs://localhost:9000}
 DFS_REPLICATION=${DFS_REPLICATION:-1}
+RESOURCEMANAGER_HOSTNAME=${RESOURCEMANAGER_HOSTNAME:-localhost}
 
 rewrite $HADOOP_PREFIX/etc/hadoop/core-site.xml
 rewrite $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
