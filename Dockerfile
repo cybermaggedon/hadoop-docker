@@ -9,6 +9,7 @@ RUN dnf install -y curl which tar
 RUN dnf install -y java-1.8.0-openjdk
 
 RUN dnf install -y procps-ng hostname
+RUN dnf install -y net-tools
 
 ENV JAVA_HOME /usr/lib/jvm/jre
 
