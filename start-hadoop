@@ -4,16 +4,52 @@ HADOOP_PREFIX=/usr/local/hadoop
 
 . $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
-/usr/sbin/sshd
+rewrite() {
+    cat $1 | \
+	sed \
+	    -e "s#@NAMENODE_URI@#${NAMENODE_URI}#" \
+	    -e "s#@DFS_REPLICATION@#${DFS_REPLICATION}#" \
+	    -e "s#@RESOURCEMANAGER_HOSTNAME@#${RESOURCEMANAGER_HOSTNAME}#" \
+	    > $1.tmp
+    mv $1.tmp $1
+}
 
-if [ ! -f /data/hadoop/.init ]
-then
-    /usr/local/hadoop/bin/hdfs namenode -format
-    touch /data/hadoop/.init
-fi
+MY_IP=$(/usr/sbin/ifconfig | grep 'inet[^6]' | awk '{print $2}' |
+	    sed 's/addr://' | grep -v 127.0.0.1 | grep -v 0.0.0.0 |
+	    head -n 1)
+echo My IP is ${MY_IP}.
+NAMENODE_URI=${NAMENODE_URI:-hdfs://${MY_IP}:9000}
+DFS_REPLICATION=${DFS_REPLICATION:-1}
+RESOURCEMANAGER_HOSTNAME=${RESOURCEMANAGER_HOSTNAME:-localhost}
 
-rm -f /tmp/*.pid
+rewrite $HADOOP_PREFIX/etc/hadoop/core-site.xml
+rewrite $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
+rewrite $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
-$HADOOP_PREFIX/sbin/start-dfs.sh
-$HADOOP_PREFIX/sbin/start-yarn.sh
+DAEMONS=${DAEMONS:-namenode,datanode,secondarynamenode,resourcemanager,nodemanager}
+DAEMONS=$(echo $DAEMONS | sed 's/,/ /g')
+
+for daemon in ${DAEMONS}
+do
+    echo Daemon $daemon...
+    case $daemon in
+	namenode)
+	    if [ ! -f /data/hadoop/.namenode_formatted ]
+	    then
+		/usr/local/hadoop/bin/hdfs namenode -format
+		touch /data/hadoop/.namenode_formatted
+	    fi
+	    /usr/local/hadoop/sbin/hadoop-daemon.sh start namenode
+	    ;;
+	secondarynamenode|datanode)
+	    /usr/local/hadoop/sbin/hadoop-daemon.sh start $daemon
+	    ;;
+	resourcemanager|nodemanager|proxyserver)
+	    /usr/local/hadoop/sbin/yarn-daemon.sh start $daemon
+	    ;;
+	*)
+	    echo Daemon $daemon is not something I know how to start.
+    esac
+done
+
 
