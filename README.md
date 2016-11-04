@@ -1,10 +1,10 @@
 
-Hadoop container for development purposes.  Runs HDFS and/or Yarn.
+Hadoop container, runs single node stand-alone or can be configured into a
+cluster.  Runs HDFS and/or Yarn.
 
 To run:
 
 ```
-
   docker run -p 9000:9000 cybermaggedon/hadoop:2.7.3
 
 ```
@@ -12,7 +12,6 @@ To run:
 To persist data, mount a volume on /data:
 
 ```
-
   docker run -p 9000:9000 -v /data/hadoop:/data cybermaggedon/hadoop:2.7.3
 
 ```
@@ -33,7 +32,6 @@ To run in cluster mode, you need to change some environment variables:
 Running an HDFS cluster:
 
 ```
-
   # Master
   docker run --rm -e DAEMONS=namenode,datanode,secondarynamenode \
       --name=hadoop01 -p 50070:50070 -p 50075:50075 -p 50090:50090 \
@@ -50,7 +48,6 @@ Running an HDFS cluster:
 or a Yarn cluster:
 
 ```
-
   # Master
   docker run --rm -e DAEMONS=resourcemanager,nodemanager \
       -e RESOURCEMANAGER_HOSTNAME=localhost --name=hadoop01 \
