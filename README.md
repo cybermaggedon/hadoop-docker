@@ -66,6 +66,6 @@ or a Yarn cluster:
 
 ```
 
-
+Source at <http://github.com/cybermaggedon/hadoop-docker>.
 
 
