@@ -5,14 +5,14 @@ cluster.  Runs HDFS and/or Yarn.
 To run:
 
 ```
-  docker run -p 9000:9000 cybermaggedon/hadoop:2.7.3
+  docker run -p 9000:9000 cybermaggedon/hadoop:2.8.0
 
 ```
 
 To persist data, mount a volume on /data:
 
 ```
-  docker run -p 9000:9000 -v /data/hadoop:/data cybermaggedon/hadoop:2.7.3
+  docker run -p 9000:9000 -v /data/hadoop:/data cybermaggedon/hadoop:2.8.0
 
 ```
 
@@ -35,13 +35,13 @@ Running an HDFS cluster:
   # Master
   docker run --rm -e DAEMONS=namenode,datanode,secondarynamenode \
       --name=hadoop01 -p 50070:50070 -p 50075:50075 -p 50090:50090 \
-      -p 9000:9000 cybermaggedon/hadoop:2.7.3
+      -p 9000:9000 cybermaggedon/hadoop:2.8.0
 
   # Slaves
   docker run --rm -e DAEMONS=datanode -e NAMENODE_URI=hdfs://hadoop01:9000 \
-      --name=hadoop02 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.7.3
+      --name=hadoop02 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.0
   docker run --rm -e DAEMONS=datanode -e NAMENODE_URI=hdfs://hadoop01:9000 \
-      --name=hadoop03 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.7.3
+      --name=hadoop03 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.0
       
 ```
 
@@ -51,15 +51,15 @@ or a Yarn cluster:
   # Master
   docker run --rm -e DAEMONS=resourcemanager,nodemanager \
       -e RESOURCEMANAGER_HOSTNAME=localhost --name=hadoop01 \
-      -p 8088:8088 cybermaggedon/hadoop:2.7.3
+      -p 8088:8088 cybermaggedon/hadoop:2.8.0
 
   # Slaves
   docker run --rm -e DAEMONS=nodemanager -e RESOURCEMANAGER_HOSTNAME=hadoop01 \
       -e NAMENODE_URI=hdfs://hadoop01:9000 -i -t --name=hadoop02 \
-      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.7.3
+      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.0
   docker run --rm -e DAEMONS=nodemanager -e RESOURCEMANAGER_HOSTNAME=hadoop01 \
       -e NAMENODE_URI=hdfs://hadoop01:9000 -i -t --name=hadoop03 \
-      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.7.3
+      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.0
 
 ```
 

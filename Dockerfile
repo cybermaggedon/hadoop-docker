@@ -1,9 +1,6 @@
-# Creates pseudo distributed hadoop 2.7.1
-#
-# docker build -t hadoop .
 
-FROM fedora:24
-MAINTAINER cybermaggedon
+FROM fedora:25
+ARG HADOOP_VERSION=2.8.0
 
 RUN dnf install -y curl which tar
 RUN dnf install -y java-1.8.0-openjdk
@@ -14,8 +11,8 @@ RUN dnf install -y net-tools
 ENV JAVA_HOME /usr/lib/jvm/jre
 
 # Hadoop
-ADD hadoop-2.7.3.tar.gz /usr/local/
-RUN ln -s /usr/local/hadoop-2.7.3 /usr/local/hadoop
+ADD hadoop-${HADOOP_VERSION}.tar.gz /usr/local/
+RUN ln -s /usr/local/hadoop-${HADOOP_VERSION} /usr/local/hadoop
 
 ENV HADOOP_PREFIX /usr/local/hadoop
 ENV HADOOP_COMMON_HOME /usr/local/hadoop
