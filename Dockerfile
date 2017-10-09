@@ -1,6 +1,6 @@
 
 FROM fedora:25
-ARG HADOOP_VERSION=2.8.0
+ARG HADOOP_VERSION=2.8.1
 
 RUN dnf install -y curl which tar
 RUN dnf install -y java-1.8.0-openjdk
