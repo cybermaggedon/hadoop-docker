@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. /hadoop.env
+
+if [ ! -f /data/hadoop/.namenode_formatted ]
+then
+    echo FORMAT............
+    /usr/local/hadoop/bin/hdfs namenode -format
+    touch /data/hadoop/.namenode_formatted
+    echo FORMAT DONE
+fi
+
+$HADOOP_PREFIX/bin/hdfs --config $HADOOP_CONF_DIR namenode
+

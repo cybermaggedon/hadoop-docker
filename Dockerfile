@@ -1,7 +1,8 @@
 
-FROM fedora:26
+FROM fedora:27
 ARG HADOOP_VERSION=2.8.1
 
+RUN dnf update -y
 RUN dnf install -y curl which tar
 RUN dnf install -y java-1.8.0-openjdk
 
@@ -32,9 +33,12 @@ ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
-ADD start-hadoop /start-hadoop
-RUN chown root:root /start-hadoop
-RUN chmod 700 /start-hadoop
+ADD start-hadoop /
+ADD hadoop.env /
+ADD start-datanode /
+ADD start-namenode /
+ADD start-resourcemanager /
+ADD start-nodemanager /
 
 CMD /start-hadoop; while true; do sleep 10000; done
 
