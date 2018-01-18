@@ -39,6 +39,7 @@ ADD start-datanode /
 ADD start-namenode /
 ADD start-resourcemanager /
 ADD start-nodemanager /
+ADD start-secondarynamenode /
 
 CMD /start-hadoop; while true; do sleep 10000; done
 
