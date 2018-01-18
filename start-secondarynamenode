@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. /hadoop.env
+
+if [ ! -f /data/hadoop/.secondarynamenode_formatted ]
+then
+    echo FORMAT............
+    /usr/local/hadoop/bin/hdfs secondarynamenode -format
+    touch /data/hadoop/.secondarynamenode_formatted
+    echo FORMAT DONE
+fi
+
+$HADOOP_PREFIX/bin/hdfs --config $HADOOP_CONF_DIR secondarynamenode
+
