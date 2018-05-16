@@ -1,5 +1,5 @@
 
-FROM fedora:27
+FROM fedora:28
 ARG HADOOP_VERSION=2.8.1
 
 RUN dnf update -y
