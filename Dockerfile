@@ -1,13 +1,10 @@
 
-FROM fedora:28
+FROM fedora:29
 ARG HADOOP_VERSION=2.8.1
 
-RUN dnf update -y
-RUN dnf install -y curl which tar
-RUN dnf install -y java-1.8.0-openjdk
-
-RUN dnf install -y procps-ng hostname
-RUN dnf install -y net-tools
+RUN dnf update -y && dnf install -y curl which tar && \
+    dnf install -y java-1.8.0-openjdk && dnf install -y procps-ng hostname && \
+    dnf install -y net-tools && dnf clean all
 
 ENV JAVA_HOME /usr/lib/jvm/jre
 

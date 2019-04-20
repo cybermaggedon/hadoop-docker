@@ -1,7 +1,7 @@
 
 REPOSITORY=cybermaggedon/hadoop
 VERSION=$(shell git describe | sed 's/^v//')
-HADOOP_VERSION=2.9.1
+HADOOP_VERSION=2.9.2
 
 SUDO=
 BUILD_ARGS=--build-arg HADOOP_VERSION=${HADOOP_VERSION}
