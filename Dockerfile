@@ -1,5 +1,5 @@
 
-FROM fedora:29
+FROM fedora:32
 ARG HADOOP_VERSION=2.8.1
 
 RUN dnf update -y && dnf install -y curl which tar && \
