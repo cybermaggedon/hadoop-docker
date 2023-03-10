@@ -1,6 +1,6 @@
 
-FROM fedora:29
-ARG HADOOP_VERSION=3.2.0
+FROM fedora:37
+ARG HADOOP_VERSION=3.3.4
 
 RUN dnf update -y
 RUN dnf install -y curl which tar

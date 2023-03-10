@@ -5,14 +5,14 @@ cluster.  Runs HDFS and/or Yarn.
 To run:
 
 ```
-  docker run -p 9000:9000 cybermaggedon/hadoop:2.8.2
+  docker run -p 9000:9000 cybermaggedon/hadoop:3.3.4
 
 ```
 
 To persist data, mount a volume on /data:
 
 ```
-  docker run -p 9000:9000 -v /data/hadoop:/data cybermaggedon/hadoop:2.8.2
+  docker run -p 9000:9000 -v /data/hadoop:/data cybermaggedon/hadoop:3.3.4
 
 ```
 
@@ -35,14 +35,14 @@ Running an HDFS cluster:
   # Master
   docker run --rm -e DAEMONS=namenode,datanode,secondarynamenode \
       --name=hadoop01 -p 50070:50070 -p 50075:50075 -p 50090:50090 \
-      -p 9000:9000 cybermaggedon/hadoop:2.8.2 /start-namenode
+      -p 9000:9000 cybermaggedon/hadoop:3.3.4 /start-namenode
 
   # Slaves
   docker run --rm -e DAEMONS=datanode -e NAMENODE_URI=hdfs://hadoop01:9000 \
-      --name=hadoop02 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.2 \
+      --name=hadoop02 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:3.3.4 \
       /start-datanode
   docker run --rm -e DAEMONS=datanode -e NAMENODE_URI=hdfs://hadoop01:9000 \
-      --name=hadoop03 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.2 \
+      --name=hadoop03 --link hadoop01:hadoop01 -P cybermaggedon/hadoop:3.3.4 \
       /start-datanode
       
 ```
@@ -52,21 +52,20 @@ or a Yarn cluster:
 ```
   # Master
   docker run --rm --name=hadoop01 \
-      -p 8088:8088 cybermaggedon/hadoop:2.8.2 \
+      -p 8088:8088 cybermaggedon/hadoop:3.3.4 \
       start-resourcemanager
 
   # Slaves
   docker run --rm -e RESOURCEMANAGER_HOSTNAME=hadoop01 \
       -i -t --name=hadoop02 \
-      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.2 \
+      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:3.3.4 \
       start-nodemanager
   docker run --rm -e RESOURCEMANAGER_HOSTNAME=hadoop01 \
       -i -t --name=hadoop03 \
-      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:2.8.2 \
+      --link hadoop01:hadoop01 -P cybermaggedon/hadoop:3.3.4 \
       start-nodemanager
 
 ```
 
 Source at <http://github.com/cybermaggedon/hadoop-docker>.
-
 
