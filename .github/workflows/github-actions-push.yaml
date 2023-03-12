@@ -19,7 +19,6 @@ jobs:
   build-image:
 
     name: Docker image
-    needs: compile
     runs-on: ubuntu-latest
 
     steps:
